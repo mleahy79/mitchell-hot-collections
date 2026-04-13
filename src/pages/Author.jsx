@@ -2,7 +2,6 @@ import React from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,15 +9,18 @@ import { useParams } from "react-router-dom";
 const Author = () => {
   const { authorId } = useParams();
   const [follow, setFollow] = useState(false);
-  const [followCount, setFollowCount] = useState(573);
+  const [followCount, setFollowCount] = useState(0);
 
   const [data, setData] = useState(null);
   useEffect(() => {
     fetch(
-      `https://us-central1-nft-cloud-functions.cloudfunctions.net/author/${authorId}`
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
     )
       .then((response) => response.json())
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+        setFollowCount(data.followers);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, [authorId]);
 
@@ -45,15 +47,15 @@ const Author = () => {
                   
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={data.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
+                          {data.authorName}
+                          <span className="profile_username">@{data.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
+                            {data.address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
