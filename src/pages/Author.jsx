@@ -24,10 +24,8 @@ const Author = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, [authorId]);
 
-  if (!data) return <div>Loading...</div>;
-
   return (
-    <div id="wrapper">
+    <div id="wrapper">  
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
 
@@ -44,18 +42,18 @@ const Author = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="d_profile de-flex">
-                  
+
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={data.authorImage} alt="" />
+                      <img src={data?.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          {data.authorName}
-                          <span className="profile_username">@{data.tag}</span>
+                          {data?.authorName}
+                          <span className="profile_username">@{data?.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            {data.address}
+                            {data?.address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
